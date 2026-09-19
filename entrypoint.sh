@@ -1,11 +1,11 @@
 #!/bin/bash
 set -e
 
-echo "[Entrypoint] Initializing application stack..."
+echo "[Entrypoint] Initializing services..."
 
-# Run health checks/wait scripts before full start
+# Run non-blocking checks
 /app/wait-for-nginx.sh
 /app/wait-for-xray.sh
 
-echo "[Entrypoint] Health checks passed. Starting Supervisord..."
+echo "[Entrypoint] Starting process manager..."
 exec "$@"
