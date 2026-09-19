@@ -1,31 +1,40 @@
 {
   "log": {
     "level": "warn",
-    "timestamp": true
+    "output": "stderr",
+    "timestamp": false
   },
   "inbounds": [
     {
+      "tag": "vless-ws-in",
       "type": "vless",
-      "tag": "vless-in",
       "listen": "127.0.0.1",
       "listen_port": 10001,
-      "sniff": true,
       "users": [
         {
-          "uuid": "hitogami",
-          "flow": ""
+          "uuid": "hitogami"
         }
       ],
+      "multiplex": {
+        "enabled": true,
+        "padding": true
+      },
       "transport": {
         "type": "ws",
-        "path": "/hitogami"
+        "path": "/hitogami",
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
       }
     }
   ],
   "outbounds": [
     {
+      "tag": "direct",
       "type": "direct",
-      "tag": "direct"
+      "domain_strategy": "AsIs"
     }
-  ]
+  ],
+  "route": {
+    "final": "direct"
+  }
 }
