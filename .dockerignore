@@ -1,0 +1,42 @@
+# Version Control
+.git
+.gitignore
+
+# Environment & Secret Files
+.env
+*.pem
+*.crt
+*.key
+*.pfx
+
+# Python Artifacts & Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+
+# Docker & Deployment Files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# IDE & Editor Settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs & Runtime State
+*.log
+/var/log/
+/tmp/
+
+# Documentation & Misc
+README.md
+docs/
+.DS_Store
+Thumbs.db
