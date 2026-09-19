@@ -12,8 +12,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     supervisor \
     python3 \
     python3-pip \
-    python3-dev \
-    build-essential \
     curl \
     netcat-openbsd \
     net-tools \
@@ -23,9 +21,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install uvloop without unsupported flags
 RUN pip3 install --no-cache-dir uvloop
 
-# Copy binaries
+# Copy binaries from multi-stage images
 COPY --from=xray-bin /usr/bin/xray /usr/local/bin/xray
-COPY --from=singbox-bin /usr/bin/sing-box /usr/local/bin/sing-box
+COPY --from=singbox-bin /usr/local/bin/sing-box /usr/local/bin/sing-box
 
 WORKDIR /app
 
