@@ -1,8 +1,8 @@
 #!/bin/bash
-echo "[Wait-Script] Validating Sing-Box / Proxy configuration..."
-if [ -f /etc/sing-box/config.json ]; then
-    echo "[Wait-Script] Sing-Box configuration file found."
+echo "[Wait-Script] Validating Sing-Box and Xray binaries..."
+if [ -f /etc/sing-box/config.json ] && [ -x /usr/local/bin/sing-box ]; then
+    echo "[Wait-Script] Proxy binary and config present."
 else
-    echo "[Wait-Script] Missing configuration file!"
+    echo "[Wait-Script] Missing proxy files!"
     exit 1
 fi
