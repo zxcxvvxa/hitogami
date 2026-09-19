@@ -20,8 +20,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uvloop using --break-system-packages for Ubuntu 22.04 compatibility
-RUN pip3 install --no-cache-dir --break-system-packages uvloop
+# Install uvloop without unsupported flags
+RUN pip3 install --no-cache-dir uvloop
 
 # Copy binaries
 COPY --from=xray-bin /usr/bin/xray /usr/local/bin/xray
