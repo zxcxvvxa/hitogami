@@ -6,7 +6,7 @@ FROM ubuntu:22.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
 
-# Install system dependencies, C-build tools (required for uvloop compilation), Nginx, and Python
+# Install system packages cleanly without extra recommended files
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nginx \
     supervisor \
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
     && rm -rf /var/lib/apt/lists/*
 
-# Install uvloop with explicit system-override flag for Ubuntu 22.04
+# Install uvloop using --break-system-packages for Ubuntu 22.04 compatibility
 RUN pip3 install --no-cache-dir --break-system-packages uvloop
 
 # Copy binaries
@@ -29,7 +29,7 @@ COPY --from=singbox-bin /usr/bin/sing-box /usr/local/bin/sing-box
 
 WORKDIR /app
 
-# Copy configuration files and scripts
+# Copy scripts & configs
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY sing-box.json /etc/sing-box/config.json
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -39,10 +39,8 @@ COPY entrypoint.sh /app/entrypoint.sh
 COPY wait-for-nginx.sh /app/wait-for-nginx.sh
 COPY wait-for-xray.sh /app/wait-for-xray.sh
 
-# Ensure script formatting and execution permissions
 RUN chmod +x /usr/local/bin/xray /usr/local/bin/sing-box /app/*.sh /app/*.py
 
-# Cloud Run injects $PORT (defaulting to 8080)
 EXPOSE 8080
 
 ENTRYPOINT ["/app/entrypoint.sh"]
